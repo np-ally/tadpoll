@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+  }
+  .playerPopup{
+    position: relative;
+    width: 500px;
+    margin: auto;
+  }
+  .playerwin {
+    position: relative;
+    height: 400px;
+    width: 500px;
+  }
+  @media only screen and (max-device-width: 480px) {
+    .playerPopup{
+        width: 350px;
+    }
+    .playerwin {
+        height: 280px;
+        width: 350px;
+    }
+  }
+  .loginPopup {
+    position: relative;
+    text-align: center;
+    width: 500px;
+    margin: auto;
+    z-index: 5;
+  }
+  .formPopup {
+    display: none;
+    padding: 17px;
+    position: absolute;
+    transform: translate(0px, -404px);
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 9;
+    width: 500px;
+    height: 402px;
+    overflow: auto;
+  }
+  
+  .formContainer {
+    width: 100%;
+    padding: 0%;
+  }
+  .formContainer input[type=text] {
+    display: block;
+    width: 60%;
+    padding-left: 2%;
+    margin: auto;
+    border: none;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    height: 52px;
+    font-family: Roboto;
+    font-size: 15px;
+    color: #000000; 
+    text-align: left;
+  }
+  .formContainer input[type=text]::placeholder {
+    color: #868E96;
+    font-style: italic;
+   }
+  .formContainer input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  .formContainer .btn {
+    display: block;
+    margin: 25px auto;
+    border-style: none;
+    border-radius: 6px;
+    background-color: #4ADCB5;
+    cursor: pointer;
+    height: 52px;
+    width: 200px;
+    font-family: Roboto;
+    color: #fff;
+    text-align: center;
+    font-size: 15;
+    opacity: .8;
+  }
+  .formContainer .btn:hover,
+  .openButton:hover {
+    opacity: 1;
+  }
+  .formContainer .footer {
+     text-align:right;
+     font-style:Roboto; 
+     font-size:10px; 
+     display:block; 
+     position:relative;
+  }
+  @media only screen and (max-device-width: 480px) {
+      .loginPopup{ 
+        width: 350px 
+      }
+      .formPopup{
+        height: 282px;
+        width: 350px;
+        transform: translate(0px, -284px);       
+      }
+  }

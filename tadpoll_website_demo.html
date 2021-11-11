@@ -3,26 +3,45 @@
     * {
         box-sizing: border-box;
       }
-      #player {
+      .playerPopup{
         position: relative;
-        left: 17.5%;
+        width: 500px;
+        margin: auto;
+      }
+      .playerwin {
+        position: relative;
+        height: 400px;
+        width: 500px;
+      }
+      @media only screen and (max-device-width: 480px) {
+        .playerPopup{
+            width: 350px;
+        }
+        .playerwin {
+            height: 280px;
+            width: 350px;
+        }
       }
       .loginPopup {
         position: relative;
         text-align: center;
-        width: 100%;
+        width: 500px;
+        margin: auto;
+        z-index: 5;
       }
       .formPopup {
         display: none;
+        padding: 17px;
         position: absolute;
-        left: 50%;
-        transform: translate(-50%, -100%);
+        transform: translate(0px, -404px);
         background-color: #fff;
         border-radius: 5px;
         z-index: 9;
-        width: 70%;
-        height: 410px;
+        width: 500px;
+        height: 402px;
+        overflow: auto;
       }
+      
       .formContainer {
         width: 100%;
         padding: 0%;
@@ -70,22 +89,33 @@
       }
       .formContainer .footer {
          text-align:right;
-         padding-right:2px; 
          font-style:Roboto; 
          font-size:10px; 
          display:block; 
          position:relative;
       }
+      @media only screen and (max-device-width: 480px) {
+          .loginPopup{ 
+            width: 350px 
+          }
+          .formPopup{
+            height: 282px;
+            width: 350px;
+            transform: translate(0px, -284px);       
+          }
+      }
   </style>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
+   <div class="playerPopup"> 
+    <div id="player" class="playerwin"></div>
+   </div>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
-     var tag = document.createElement('script')
-     tag.src = "https://www.youtube.com/iframe_api";
-     var firstScriptTag = document.getElementsByTagName('script')[0]
+    var tag = document.createElement('script')
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0]
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
 
       // 3. This function creates an <iframe> (and YouTube player)
@@ -93,8 +123,6 @@
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-          height: '400px',
-          width: '65%',
           videoId: '6DBwCBTddAk',
           playerVars: {
             'playsinline' : 1, 
@@ -201,7 +229,7 @@
       <div class="formPopup" id="popupForm">
         <div class="formContainer">
           <h2 style="font-family:Roboto; font-size:24px; color:000000; font-style:bold; margin: 4% auto;">This will take just a sec</h2>
-          <label for="email" style="margin-bottom: -10px;">
+          <label for="email">
             <p style="font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;">What is your work email?</p>
           </label>
           <input type="text" id="email" placeholder="jane@work.com" name="email" required>
