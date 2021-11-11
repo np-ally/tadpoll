@@ -1,0 +1,218 @@
+<html>
+  <style>
+    * {
+        box-sizing: border-box;
+      }
+      #player {
+        position: relative;
+        left: 17.5%;
+      }
+      .loginPopup {
+        position: relative;
+        text-align: center;
+        width: 100%;
+      }
+      .formPopup {
+        display: none;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        background-color: #fff;
+        border-radius: 5px;
+        z-index: 9;
+        width: 70%;
+        height: 410px;
+      }
+      .formContainer {
+        width: 100%;
+        padding: 0%;
+      }
+      .formContainer input[type=text] {
+        display: block;
+        width: 60%;
+        padding-left: 2%;
+        margin: auto;
+        border: none;
+        background-color: #f3f3f3;
+        border-radius: 5px;
+        height: 52px;
+        font-family: Roboto;
+        font-size: 15px;
+        color: #000000; 
+        text-align: left;
+      }
+      .formContainer input[type=text]::placeholder {
+        color: #868E96;
+        font-style: italic;
+       }
+      .formContainer input[type=text]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+      .formContainer .btn {
+        display: block;
+        margin: 25px auto;
+        border-style: none;
+        border-radius: 6px;
+        background-color: #4ADCB5;
+        cursor: pointer;
+        height: 52px;
+        width: 200px;
+        font-family: Roboto;
+        color: #fff;
+        text-align: center;
+        font-size: 15;
+        opacity: .8;
+      }
+      .formContainer .btn:hover,
+      .openButton:hover {
+        opacity: 1;
+      }
+      .formContainer .footer {
+         text-align:right;
+         padding-right:2px; 
+         font-style:Roboto; 
+         font-size:10px; 
+         display:block; 
+         position:relative;
+      }
+  </style>
+  <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+     var tag = document.createElement('script')
+     tag.src = "https://www.youtube.com/iframe_api";
+     var firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '400px',
+          width: '65%',
+          videoId: '6DBwCBTddAk',
+          playerVars: {
+            'playsinline' : 1, 
+            'controls' : 1,
+            'rel' : 0,
+            'modestbranding' : 1,
+            'disablekb' : 1,
+            'fs' : 0,
+            'autoplay' : 0
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onPlaybackRateChange': onPlayerRateChange
+          }
+        });
+      }
+
+      // The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+       event.target.playVideo();
+      }
+
+      //The API will call this function when the video player rate changes.
+      var playbackrate = 1;
+      function onPlayerRateChange(event) {
+        playbackrate = event.data;
+        //console.log("playbackrate", playbackrate)
+      }
+      // The API calls this function when the player's state changes.
+      var done = false;
+      var playtime = 43;
+      var done_pause = false;
+      var timep = 0;
+      var pause_source_func = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            timep = Math.round(player.getCurrentTime());
+            //console.log(playtime, timep, (playtime-timep)*1000);
+            if (timep >= playtime){ 
+                pauseVideo();
+                //console.log("pause in playing") 
+            }
+            else { 
+                //console.log("set time out in playing to ", ((playtime-timep)*1000)/playbackrate)
+                setTimeout(pauseVideo, ((playtime-timep)*1000)/playbackrate); 
+            }
+            done = true;
+        }
+        if (event.data == YT.PlayerState.PAUSED && done) {
+            timep = Math.round(player.getCurrentTime());
+            //console.log("paused & done", timep);
+            if (timep < playtime && !pause_source_func) {
+                //console.log("set done to false")
+                done = false;
+            }
+            else if (timep < playtime && pause_source_func) {
+                pause_source_func = false;
+                player.playVideo();
+                done = false;
+                //console.log("pause source")
+            }
+            else if (timep >= playtime && !done_pause) {
+                openForm();
+                //console.log("open form", timep);
+                done_pause = true;
+                done = false;
+            }
+        }
+      }
+      function pauseVideo() {
+        player.pauseVideo();
+        pause_source_func = true;
+      }
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+        var email = document.getElementById("email").value;
+        var useCase = document.getElementById("ans").value;
+        //console.log(datain);
+        saveForm(email, useCase);
+        player.playVideo();
+      }
+      
+      function saveForm(email, useCase) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+            method: "post",
+            headers: myHeaders,
+            redirect: "follow",
+            body: JSON.stringify([{"email":email,"Use Case":useCase}])
+        };
+
+        fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+        }
+    </script>
+    <div class="loginPopup">
+      <div class="formPopup" id="popupForm">
+        <div class="formContainer">
+          <h2 style="font-family:Roboto; font-size:24px; color:000000; font-style:bold; margin: 4% auto;">This will take just a sec</h2>
+          <label for="email" style="margin-bottom: -10px;">
+            <p style="font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;">What is your work email?</p>
+          </label>
+          <input type="text" id="email" placeholder="jane@work.com" name="email" required>
+          <label for="ans">
+            <p style="font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;"> What is your use case?</p>
+          </label>
+          <input type="text" id="ans" placeholder="Digital Transformation" name="ans" required">
+          <button type="submit" class="btn" onclick="closeForm()">SUBMIT</button>
+          <p class="footer">Powered by Tadpoll</p>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
