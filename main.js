@@ -66,9 +66,12 @@
             
             getUserParams(id)
             .then(custParams => {
-            //console.log(custParams);
+            console.log(window.location.hostname);
                 if (custParams === undefined) {
                     $( "body" ).append( "<h1>Error: Unidentified User</h1>" );
+                }
+                else if (custParams.fields.domain != window.location.hostname) {
+                    $( "body" ).append( "<h1>Error: Incorrect Domain</h1>" );
                 }
                 else {
 
@@ -84,6 +87,7 @@
                             loadScript("form.js", "text/javascript");
                         }
                         //can add other form options here depending on the customer config
+                        //else if (custParams.fields.form === TBD){}
                     }); 
                 }
             });
