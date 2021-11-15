@@ -37,7 +37,20 @@
         // Call our main function
         main(); 
     }
-    
+
+    function loadScript(src, type) {
+        return new Promise(function(resolve, reject) {
+            let script = document.createElement('script');
+            script.type = type;
+            script.src = src;
+        
+            script.onload = () => resolve(script);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+        
+            document.head.append(script);
+          });
+    }
+
     /******** Our main function ********/
     function main() { 
         jQuery(document).ready(function($) { 
@@ -47,25 +60,73 @@
                 type: "text/css", 
                 href: "main_style.css" 
             });
-            css_link.appendTo('head');          
-    
-            /*****Load video script****/
-            var video_script = document.createElement('script');
-            video_script.setAttribute("type","text/javascript");
-            video_script.setAttribute("src","youtube_demo.js");
-            document.body.appendChild(video_script);
+            css_link.appendTo('head');  
             
-            /***Load Form */
-            var form_script = document.createElement('script');
-            form_script.setAttribute("type","text/javascript");
-            form_script.setAttribute("src","form.js");
-            document.body.appendChild(form_script);
+            var id = getParams("main.js");
+            
+            getUserParams(id)
+            .then(custParams => {
+            //console.log(custParams);
+                if (custParams === undefined) {
+                    $( "body" ).append( "<h1>Error: Unidentified User</h1>" );
+                }
+                else {
 
-            //var form_tag = document.createElement('div');
-            //form_tag.setAttribute("id","form");
-            //document.body.appendChild(form_tag);
-            //$( "#form" ).load( "form.html" );
-            
+                    var video_query = '?video=' + custParams.fields.video 
+                    + '&insert_duration=' + custParams.fields.insert_duration + '&id=' +
+                    custParams.fields.customer_id;
+                    //console.log(video_query);
+
+                    /*****Load video and form scripts****/
+                    loadScript("youtube_demo.js" + video_query, "text/javascript")
+                    .then(script => {
+                        if (custParams.fields.form === "default"){
+                            loadScript("form.js", "text/javascript");
+                        }
+                        //can add other form options here depending on the customer config
+                    }); 
+                }
+            });
         });
     }
+    // Extract "GET" parameters from a JS include querystring
+
+function getParams(script_name) {
+    // Find all script tags
+    var scripts = document.getElementsByTagName("script");
+    // Look through them trying to find ourselves
+    for(var i=0; i<scripts.length; i++) {
+        if(scripts[i].src.indexOf("/" + script_name) > -1) {
+        // Get an array of key=value strings of params
+            var pa = scripts[i].src.split("?").pop().split("&");
+            // Split each key=value into array, the construct js object
+            var p = {};
+            for(var j=0; j<pa.length; j++) {
+                var kv = pa[j].split("=");
+                p[kv[0]] = kv[1];
+            }
+            return p;
+        }
+    }
+    // No scripts match
+    return {};
+}
+
+function getUserParams(id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+        method: "get",
+        headers: myHeaders,
+        redirect: "follow",
+        
+    };
+    
+    var cid = Object.values(id);
+    return fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 2&api_key=GJwptPIUjuDsMsOsz&filterByFormula=customer_id=" + cid, requestOptions)
+    .then(response => response.json())
+    .then(result => result.records[0])
+    .catch(error => console.log('error', error));
+}
+
 })();

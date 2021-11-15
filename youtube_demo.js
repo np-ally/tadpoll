@@ -1,4 +1,42 @@
+function saveForm(email, useCase, id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+        method: "post",
+        headers: myHeaders,
+        redirect: "follow",
+        body: JSON.stringify([{"email":email,"Use Case":useCase, "customer_id":id}])
+    };
 
+    fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
+function getParams(script_name) {
+    // Find all script tags
+    var scripts = document.getElementsByTagName("script");
+    // Look through them trying to find ourselves
+    for(var i=0; i<scripts.length; i++) {
+        if(scripts[i].src.indexOf("/" + script_name) > -1) {
+        // Get an array of key=value strings of params
+            var pa = scripts[i].src.split("?").pop().split("&");
+            // Split each key=value into array, the construct js object
+            var p = {};
+            for(var j=0; j<pa.length; j++) {
+                var kv = pa[j].split("=");
+                p[kv[0]] = kv[1];
+            }
+            return p;
+        }
+    }
+    // No scripts match
+    return {};
+}
+
+    var video_params = getParams("youtube_demo.js");
+    //Add container elements to format video
     var playercont_tag = document.createElement('div');
     playercont_tag.setAttribute("class","playerPopup");
     document.body.appendChild(playercont_tag);
@@ -8,18 +46,18 @@
     player_tag.setAttribute("class","playerwin");   
     playercont_tag.appendChild(player_tag);
         
- // 2. This code loads the IFrame Player API code asynchronously.
+ // This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script')
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0]
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
 
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
+  // This function creates an <iframe> (and YouTube player)
+  // after the API code downloads.
     var player;
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-        videoId: '6DBwCBTddAk',
+        videoId: video_params.video,
         playerVars: {
             'playsinline' : 1, 
             'controls' : 1,
@@ -50,7 +88,7 @@
     }
   // The API calls this function when the player's state changes.
     var done = false;
-    var playtime = 43;
+    var playtime = video_params.insert_duration;
     var done_pause = false;
     var timep = 0;
     var pause_source_func = false;
@@ -101,22 +139,8 @@
         var email = document.getElementById("email").value;
         var useCase = document.getElementById("ans").value;
         //console.log(datain);
-        saveForm(email, useCase);
+        saveForm(email, useCase, video_params.id);
         player.playVideo();
     }
   
-    function saveForm(email, useCase) {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        var requestOptions = {
-            method: "post",
-            headers: myHeaders,
-            redirect: "follow",
-            body: JSON.stringify([{"email":email,"Use Case":useCase}])
-        };
-
-        fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    }
+    
