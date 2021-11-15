@@ -68,10 +68,10 @@
             .then(custParams => {
             console.log(window.location.hostname);
                 if (custParams === undefined) {
-                    $( "body" ).append( "<h1>Error: Unidentified User</h1>" );
+                    alert('Error: Unidentified User' );
                 }
                 else if (custParams.fields.domain != window.location.hostname) {
-                    $( "body" ).append( "<h1>Error: Incorrect Domain</h1>" );
+                    alert( 'Error: Incorrect User Domain' );
                 }
                 else {
 
