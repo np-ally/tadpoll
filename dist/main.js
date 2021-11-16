@@ -62,7 +62,7 @@
             });
             css_link.appendTo('head');  
             
-            var id = getParams("main.js");
+            var id = getParams("np-ally/tadpoll@main/dist/main.js");
             
             getUserParams(id)
             .then(custParams => {

@@ -35,7 +35,7 @@ function getParams(script_name) {
     return {};
 }
 
-    var video_params = getParams("youtube_demo.js");
+    var video_params = getParams("np-ally/tadpoll@main/dist/youtube_demo.js");
     //Add container elements to format video
     var playercont_tag = document.createElement('div');
     playercont_tag.setAttribute("class","playerPopup");
