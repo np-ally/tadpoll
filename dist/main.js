@@ -47,7 +47,7 @@
             script.onload = () => resolve(script);
             script.onerror = () => reject(new Error(`Script load error for ${src}`));
         
-            document.head.append(script);
+            document.append(script);
           });
     }
 
@@ -58,7 +58,7 @@
             var css_link = $("<link>", { 
                 rel: "stylesheet", 
                 type: "text/css", 
-                href: "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.1/dist/main_style.css" 
+                href: "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.2/dist/main_style.css" 
             });
             css_link.appendTo('head');  
             
@@ -82,10 +82,10 @@
                     //console.log(video_query);
 
                     /*****Load video and form scripts****/
-                    loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.1/dist/youtube_demo.js" + video_query, "text/javascript")
+                    loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.2/dist/youtube_demo.js" + video_query, "text/javascript")
                     .then(script => {
                         if (custParams.fields.form === "default"){
-                            loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.1/dist/form.js", "text/javascript");
+                            loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.2/dist/form.js", "text/javascript");
                         }
                         //can add other form options here depending on the customer config
                         //else if (custParams.fields.form === TBD){}
