@@ -35,7 +35,13 @@ function getParams(script_name) {
     return {};
 }
 
-    var video_params = getParams("np-ally/tadpoll@0.0.5/dist/youtube_demo.js");
+    var run_mode = "release"
+    var release_version = "0.0.5";
+    var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
+    if (run_mode === "local") {var search_path = '';}
+    else { search_path = search_path_release; }
+
+    var video_params = getParams(search_path + "youtube_demo.js");
     //Add container elements to format video
     let position = document.querySelector('#tadpoll1234');
     var playercont_tag = document.createElement('div');
@@ -93,36 +99,37 @@ function getParams(script_name) {
     var done_pause = false;
     var timep = 0;
     var pause_source_func = false;
+    var done_form = false;
     function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
             timep = Math.round(player.getCurrentTime());
             //console.log(playtime, timep, (playtime-timep)*1000);
-            if (timep >= playtime){ 
+            if (timep >= playtime && !done_form){ 
                 pauseVideo();
-                //console.log("pause in playing") 
+                console.log("pause in playing") 
             }
-            else { 
-                //console.log("set time out in playing to ", ((playtime-timep)*1000)/playbackrate)
+            else if (!done_form) { 
+                console.log("set time out in playing to ", ((playtime-timep)*1000)/playbackrate)
                 setTimeout(pauseVideo, ((playtime-timep)*1000)/playbackrate); 
             }
             done = true;
         }
         if (event.data == YT.PlayerState.PAUSED && done) {
             timep = Math.round(player.getCurrentTime());
-            //console.log("paused & done", timep);
+            console.log("paused & done", timep);
             if (timep < playtime && !pause_source_func) {
-                //console.log("set done to false")
+                console.log("set done to false")
                 done = false;
             }
             else if (timep < playtime && pause_source_func) {
                 pause_source_func = false;
                 player.playVideo();
                 done = false;
-                //console.log("pause source")
+                console.log("pause source")
             }
             else if (timep >= playtime && !done_pause) {
                 openForm();
-                //console.log("open form", timep);
+                console.log("open form", timep);
                 done_pause = true;
                 done = false;
             }
@@ -141,6 +148,7 @@ function getParams(script_name) {
         var useCase = document.getElementById("ans").value;
         //console.log(datain);
         saveForm(email, useCase, video_params.id);
+        done_form = true;
         player.playVideo();
     }
   

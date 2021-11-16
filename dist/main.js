@@ -3,7 +3,17 @@
     // Localize jQuery variable
     var jQuery;
     var winjqundef = false;
+
+    //Local vs release paths
+    var run_mode = "release"
+    var path_local = "../dist/";
+    var release_version = "0.0.6";
+    var path_release = "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@" + release_version + "/dist/";
+    var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     
+    if (run_mode === "local") {var path = path_local; var search_path = '';}
+    else { path = path_release; search_path = search_path_release; }
+
     /******** Load jQuery if not present *********/
     if (window.jQuery === undefined) { winjqundef=true; }
     if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.10.1') {
@@ -58,12 +68,11 @@
             var css_link = $("<link>", { 
                 rel: "stylesheet", 
                 type: "text/css", 
-                href: "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.5/dist/main_style.css" 
+                href: path + "main_style.css" 
             });
             css_link.appendTo('head');  
             
-            var id = getParams("np-ally/tadpoll@0.0.5/dist/main.js");
-            //https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.5/dist/
+            var id = getParams(search_path + "main.js");
             getUserParams(id)
             .then(custParams => {
             //console.log(window.location.hostname);
@@ -82,10 +91,10 @@
                     //console.log(video_query);
 
                     /*****Load video and form scripts****/
-                    loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.5/dist/youtube_demo.js" + video_query, "text/javascript")
+                    loadScript(path + "youtube_demo.js" + video_query, "text/javascript")
                     .then(script => {
                         if (custParams.fields.form === "default"){
-                            loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll@0.0.5/dist/form.js", "text/javascript");
+                            loadScript(path + "form.js", "text/javascript");
                         }
                         //can add other form options here depending on the customer config
                         //else if (custParams.fields.form === TBD){}
