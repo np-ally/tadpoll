@@ -35,11 +35,12 @@ function getParams(script_name) {
     return {};
 }
 
-    var video_params = getParams("np-ally/tadpoll@0.0.4/dist/youtube_demo.js");
+    var video_params = getParams("np-ally/tadpoll@0.0.5/dist/youtube_demo.js");
     //Add container elements to format video
+    let position = document.querySelector('#tadpoll1234');
     var playercont_tag = document.createElement('div');
     playercont_tag.setAttribute("class","playerPopup");
-    document.body.appendChild(playercont_tag);
+    position.appendChild(playercont_tag);
 
     var player_tag = document.createElement('div');
     player_tag.setAttribute("id","player");
