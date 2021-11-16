@@ -66,7 +66,7 @@
             
             getUserParams(id)
             .then(custParams => {
-            console.log(window.location.hostname);
+            //console.log(window.location.hostname);
                 if (custParams === undefined) {
                     alert('Error: Unidentified User' );
                 }
