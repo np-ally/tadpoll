@@ -72,6 +72,7 @@
                 }
                 else if (custParams.fields.domain != window.location.hostname) {
                     alert( 'Error: Incorrect User Domain' );
+                    console.log('Invalid domain', window.location.hostname);
                 }
                 else {
 
