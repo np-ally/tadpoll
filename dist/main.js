@@ -5,7 +5,7 @@
     var winjqundef = false;
 
     //Local vs release paths
-    var run_mode = "release"
+    var run_mode = "local"
     var path_local = "../dist/";
     var release_version = "0.0.6";
     var path_release = "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@" + release_version + "/dist/";
@@ -95,6 +95,9 @@
                     .then(script => {
                         if (custParams.fields.form === "default"){
                             loadScript(path + "form.js", "text/javascript");
+                        }
+                        if (custParams.fields.form_1 === "default"){
+                            loadScript(path + "form_1.js", "text/javascript");
                         }
                         //can add other form options here depending on the customer config
                         //else if (custParams.fields.form === TBD){}

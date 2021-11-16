@@ -35,8 +35,8 @@ function getParams(script_name) {
     return {};
 }
 
-    var run_mode = "release"
-    var release_version = "0.0.5";
+    var run_mode = "local"
+    var release_version = "0.0.6";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (run_mode === "local") {var search_path = '';}
     else { search_path = search_path_release; }
