@@ -58,7 +58,7 @@
             var css_link = $("<link>", { 
                 rel: "stylesheet", 
                 type: "text/css", 
-                href: "main_style.css" 
+                href: "https://cdn.jsdelivr.net/gh/np-ally/tadpoll/dist/main_style.css" 
             });
             css_link.appendTo('head');  
             
@@ -81,10 +81,10 @@
                     //console.log(video_query);
 
                     /*****Load video and form scripts****/
-                    loadScript("youtube_demo.js" + video_query, "text/javascript")
+                    loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll/dist/youtube_demo.js" + video_query, "text/javascript")
                     .then(script => {
                         if (custParams.fields.form === "default"){
-                            loadScript("form.js", "text/javascript");
+                            loadScript("https://cdn.jsdelivr.net/gh/np-ally/tadpoll/dist/form.js", "text/javascript");
                         }
                         //can add other form options here depending on the customer config
                         //else if (custParams.fields.form === TBD){}
