@@ -1,4 +1,4 @@
-    var release_version = "0.2.2";
+    var release_version = "0.2.3";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }

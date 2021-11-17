@@ -19,7 +19,7 @@
             $( ".labeldata2" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:center; padding-left:0%;'> How do you measure success?</p>" );
             $( ".formContainer1" ).append( "<input type='text' id='data2' placeholder='# of contacts...' name='data2' required>" );
             $( ".formContainer1" ).append( "<button type='submit' class='btn' onclick='closeForm1()'>SUBMIT</button>" );
-            $( ".formContainer" ).append( "<p class='footer'>Powered by <a href='https://tadpoll.io'>Tadpoll</a></p>" );
+            $( ".formContainer1" ).append( "<p class='footer'>Powered by <a href='https://tadpoll.io'>Tadpoll</a></p>" );
         });
     }
 })();
