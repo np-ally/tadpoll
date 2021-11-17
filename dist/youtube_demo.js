@@ -1,42 +1,4 @@
-function saveForm(email, useCase, data1, data2, id) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions = {
-        method: "post",
-        headers: myHeaders,
-        redirect: "follow",
-        body: JSON.stringify([{"email":email,"Use Case":useCase, "Form1_Data1":data1, "Form1_Data2":data2, "customer_id":id}])
-    };
-
-    fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-}
-
-function getParams(script_name) {
-    // Find all script tags
-    var scripts = document.getElementsByTagName("script");
-    // Look through them trying to find ourselves
-    for(var i=0; i<scripts.length; i++) {
-        if(scripts[i].src.indexOf("/" + script_name) > -1) {
-        // Get an array of key=value strings of params
-            var pa = scripts[i].src.split("?").pop().split("&");
-            // Split each key=value into array, the construct js object
-            var p = {};
-            for(var j=0; j<pa.length; j++) {
-                var kv = pa[j].split("=");
-                p[kv[0]] = kv[1];
-            }
-            return p;
-        }
-    }
-    // No scripts match
-    return {};
-}
-
-    //var run_mode = "local"
-    var release_version = "0.1.2";
+    var release_version = "0.1.3";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }
@@ -179,16 +141,17 @@ function getParams(script_name) {
     function openForm1() {
         document.getElementById("popupForm1").style.display = "block";
     }
-    var email;
-    var useCase; 
-    var data1;
-    var data2;
+    var email, useCase, data1, data2, record_id;
     function closeForm() {
         document.getElementById("popupForm").style.display = "none";
         email = document.getElementById("email").value;
         useCase = document.getElementById("ans").value;
         //console.log(datain);
-        if (done_form1) {saveForm(email, useCase, data1, data2, video_params.id);}
+        saveForm(email, useCase, data1, data2, video_params.id)
+        .then(record => {
+            record_id = record[0].id; 
+            //console.log(record, record[0].id, record_id);
+        });
         done_form = true;
         pause_source_func = false;
         if (!done_form1) {done=false;}
@@ -196,14 +159,65 @@ function getParams(script_name) {
     }
     function closeForm1() {
         document.getElementById("popupForm1").style.display = "none";
-        data1 = document.getElementById("data1").value;
-        data2 = document.getElementById("data2").value;
+        var data1 = document.getElementById("data1").value;
+        var data2 = document.getElementById("data2").value;
         //console.log(datain);
-        //console.log(email, useCase, data1, data2, video_params.id);
-        saveForm(email, useCase, data1, data2, video_params.id);
+        //console.log(record_id, email, useCase, data1, data2, video_params.id);
+        updateForm(record_id, email, useCase, data1, data2, video_params.id);
         done_form1 = true;
         pause_source_func = false;
         player.playVideo();
     }
   
+    function saveForm(email, useCase, data1, data2, id) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+            method: "post",
+            headers: myHeaders,
+            redirect: "follow",
+            body: JSON.stringify([{"email":email,"Use Case":useCase, "Form1_Data1":data1, "Form1_Data2":data2, "customer_id":id}])
+        };
+    
+        return fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
+        .then(response => response.json())
+        .then(result => result)
+        .catch(error => console.log('error', error));
+    }
+    function updateForm(record_id, email, useCase, data1, data2, id) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+            method: "put",
+            headers: myHeaders,
+            redirect: "follow",
+            body: JSON.stringify([{"id":record_id,"fields":{"email":email,"Use Case":useCase, "Form1_Data1":data1, "Form1_Data2":data2, "customer_id":id}}])
+        };
+    
+        fetch("https://v1.nocodeapi.com/davegtad/airtable/rQaerrGsnnHzwllE?tableName=Table 1&api_key=GJwptPIUjuDsMsOsz", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
+    
+    function getParams(script_name) {
+        // Find all script tags
+        var scripts = document.getElementsByTagName("script");
+        // Look through them trying to find ourselves
+        for(var i=0; i<scripts.length; i++) {
+            if(scripts[i].src.indexOf("/" + script_name) > -1) {
+            // Get an array of key=value strings of params
+                var pa = scripts[i].src.split("?").pop().split("&");
+                // Split each key=value into array, the construct js object
+                var p = {};
+                for(var j=0; j<pa.length; j++) {
+                    var kv = pa[j].split("=");
+                    p[kv[0]] = kv[1];
+                }
+                return p;
+            }
+        }
+        // No scripts match
+        return {};
+    }
     
