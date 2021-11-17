@@ -62,10 +62,13 @@
     border-style: none;
     border-radius: 6px;
     cursor: pointer;
+    background-color: #fff;
+    font-style:Roboto; 
+    font-size:12px; 
     text-align: center;
     height: 20px;
     width: 50px;
-    opacity: .8;
+    opacity: .7;
     z-index: 11;
   }
   .formPopup .btn1:hover,
@@ -93,10 +96,13 @@
     border-style: none;
     border-radius: 6px;
     cursor: pointer;
+    background-color: #fff;
     text-align: center;
+    font-style:Roboto; 
+    font-size:12px; 
     height: 20px;
     width: 50px;
-    opacity: .8;
+    opacity: .7;
     z-index: 11;
   }
   .formPopup1 .btn1:hover,
@@ -122,11 +128,14 @@
     position: absolute;
     border-style: none;
     border-radius: 6px;
+    background-color: #fff;
     cursor: pointer;
     text-align: center;
+    font-style:Roboto; 
+    font-size:12px; 
     height: 20px;
     width: 50px;
-    opacity: .8;
+    opacity: .7;
     z-index: 11;
   }
   .iframePopup .btn:hover,

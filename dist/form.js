@@ -13,13 +13,13 @@
             $( ".formPopup" ).append( "<button type='submit' id='formbutton' class='btn1' onclick='closeForm()'>Skip</button>" );
             $( ".formContainer" ).append( "<h2 style='font-family:Roboto; font-size:24px; color:000000; font-style:bold; margin: 4% auto;'>This will take just a sec</h2>" );
             $( ".formContainer" ).append( "<label class='labelemail' for='email'></label>" );
-            $( ".labelemail" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;'>What is your work email?</p>" );
+            $( ".labelemail" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:center; padding-left:0%;'>What is your work email?</p>" );
             $( ".formContainer" ).append( "<input type='text' id='email' placeholder='jane@work.com' name='email' required>" );
             $( ".formContainer" ).append( "<label class='labelans' for='ans'></label>" );
-            $( ".labelans" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;'> What is your use case?</p>" );
+            $( ".labelans" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:center; padding-left:0%;'> What is your use case?</p>" );
             $( ".formContainer" ).append( "<input type='text' id='ans' placeholder='Digital Transformation' name='ans' required>" );
             $( ".formContainer" ).append( "<button type='submit' class='btn' onclick='closeForm()'>SUBMIT</button>" );
-            $( ".formContainer" ).append( "<p class='footer'>Powered by Tadpoll</p>" );
+            $( ".formContainer" ).append( "<p class='footer'>Powered by <a href='https://tadpoll.io'>Tadpoll</a></p>" );
         });
     }
 })();
