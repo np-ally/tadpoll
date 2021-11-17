@@ -1,4 +1,4 @@
-    var release_version = "0.1.3";
+    var release_version = "0.2.0";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }
@@ -59,13 +59,18 @@
     var done = false;
     var playtime = video_params.insert_duration;
     var playtime_to_form1 = video_params.insert_duration_1;
+    var playtime_to_iframe = video_params.insert_duration_iframe;
     var done_pause = false;
     var done_pause1 = false;
+    var done_pause2 = false;
     var timep = 0;
     var pause_source_func = false;
     var done_form = false;
     if (playtime_to_form1 == 0){ var done_form1 = true; console.log("no second form");}
     else {done_form1 = false;}
+    if (playtime_to_iframe == 0){ var done_form2 = true; console.log("no iframe");}
+    else {done_form2 = false;}
+    
     function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
             timep = Math.round(player.getCurrentTime());
@@ -85,8 +90,16 @@
                 //console.log("pause in playing1");
             }
             else if (!done_form1 && done_form) { 
-                //console.log("1 set time out in playing to ", ((playtime_to_form1-timep)*1000)/playbackrate)
+                console.log("1 set time out in playing to ", ((playtime_to_form1-timep)*1000)/playbackrate)
                 setTimeout(pauseVideo, ((playtime_to_form1-timep)*1000)/playbackrate); 
+            }
+            if (timep >= playtime_to_iframe && !done_form2 && done_form1 && done_form){
+                pauseVideo();
+                //console.log("pause in playing2");
+            }
+            else if (!done_form2 && done_form1 && done_form) { 
+                //console.log("2 set time out in playing to ", ((playtime_to_iframe-timep)*1000)/playbackrate)
+                setTimeout(pauseVideo, ((playtime_to_iframe-timep)*1000)/playbackrate); 
             }
             done = true;
         }
@@ -129,6 +142,24 @@
                     done = false;
                 }
             }
+            else if(!done_form2 && done_form1 && done_form) {
+                if (timep < playtime_to_iframe && !pause_source_func) {
+                    //console.log("set done to false2")
+                    done = false;
+                }
+                else if (timep < playtime_to_iframe && pause_source_func) {
+                    pause_source_func = false;
+                    player.playVideo();
+                    done = false;
+                    //console.log("pause source2")
+                }
+                else if (timep >= playtime_to_iframe && !done_pause2) {
+                    openiframe();
+                    //console.log("open iframe", timep);
+                    done_pause2 = true;
+                    done = false;
+                }
+            }
         }
     }
     function pauseVideo() {
@@ -137,13 +168,21 @@
     }
     function openForm() {
         document.getElementById("popupForm").style.display = "block";
+        document.getElementById("formbutton").style.display = "block";
     }
     function openForm1() {
         document.getElementById("popupForm1").style.display = "block";
+        document.getElementById("formbutton1").style.display = "block";
+    }
+    function openiframe() {
+        document.getElementById("Popupiframe").src = video_params.iframe_src;
+        document.getElementById("Popupiframe").style.display = "block";
+        document.getElementById("iframebutton").style.display = "block";
     }
     var email, useCase, data1, data2, record_id;
     function closeForm() {
         document.getElementById("popupForm").style.display = "none";
+        document.getElementById("formbutton").style.display = "none";
         email = document.getElementById("email").value;
         useCase = document.getElementById("ans").value;
         //console.log(datain);
@@ -154,17 +193,26 @@
         });
         done_form = true;
         pause_source_func = false;
-        if (!done_form1) {done=false;}
+        if (!done_form1 || !done_form2) {done=false;}
         player.playVideo();
     }
     function closeForm1() {
         document.getElementById("popupForm1").style.display = "none";
+        document.getElementById("formbutton1").style.display = "block";
         var data1 = document.getElementById("data1").value;
         var data2 = document.getElementById("data2").value;
         //console.log(datain);
         //console.log(record_id, email, useCase, data1, data2, video_params.id);
         updateForm(record_id, email, useCase, data1, data2, video_params.id);
         done_form1 = true;
+        pause_source_func = false;
+        if (!done_form2) {done=false;}
+        player.playVideo();
+    }
+    function closeiframe() {
+        document.getElementById("Popupiframe").style.display = "none";
+        document.getElementById("iframebutton").style.display = "none";
+        done_form2 = true;
         pause_source_func = false;
         player.playVideo();
     }

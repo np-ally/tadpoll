@@ -10,6 +10,7 @@
             position.append(form_tag);
             $( ".loginPopup" ).append( "<div class='formPopup' id='popupForm'></div>" );
             $( ".formPopup" ).append( "<div class='formContainer'>" );
+            $( ".formPopup" ).append( "<button type='submit' id='formbutton' class='btn1' onclick='closeForm()'>Skip</button>" );
             $( ".formContainer" ).append( "<h2 style='font-family:Roboto; font-size:24px; color:000000; font-style:bold; margin: 4% auto;'>This will take just a sec</h2>" );
             $( ".formContainer" ).append( "<label class='labelemail' for='email'></label>" );
             $( ".labelemail" ).append( "<p style='font-family:Roboto; font-size:15px; color:000000; text-align:left; padding-left:22%;'>What is your work email?</p>" );

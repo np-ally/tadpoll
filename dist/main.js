@@ -7,7 +7,7 @@
     //Local vs release paths
     //var run_mode = "local"
     var path_local = "../dist/";
-    var release_version = "0.1.3";
+    var release_version = "0.2.0";
     var path_release = "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@" + release_version + "/dist/";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     
@@ -87,7 +87,8 @@
 
                     var video_query = '?video=' + custParams.fields.video 
                     + '&insert_duration=' + custParams.fields.insert_duration + '&insert_duration_1=' + 
-                    custParams.fields.insert_duration_1 + '&id=' + custParams.fields.customer_id;
+                    custParams.fields.insert_duration_1 + '&id=' + custParams.fields.customer_id + '&insert_duration_iframe=' + 
+                    custParams.fields.insert_duration_iframe + '&iframe_src=' + custParams.fields.iframe_src;
                     //console.log(video_query);
 
                     /*****Load video and form scripts****/
@@ -95,13 +96,16 @@
                     .then(script => {
                         if (custParams.fields.form === "default"){
                             loadScript(path + "form.js", "text/javascript");
-                        }
+                        }   
                         if (custParams.fields.form_1 === "default"){
                             loadScript(path + "form_1.js", "text/javascript");
+                        }  
+                        if (custParams.fields.iframe === "default"){
+                            loadScript(path + "iframe.js", "text/javascript");
                         }
+                    });
                         //can add other form options here depending on the customer config
-                        //else if (custParams.fields.form === TBD){}
-                    }); 
+                        //else if (custParams.fields.form === TBD){} 
                 }
             });
         });

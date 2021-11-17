@@ -34,31 +34,105 @@
     margin: auto;
     z-index: 5;
   }
+  .iframePopup {
+    position: relative;
+    text-align: center;
+    width: 500px;
+    margin: auto;
+    z-index: 5;
+  }
   .formPopup {
     display: none;
     padding: 17px;
     position: absolute;
-    transform: translate(0px, -402px);
+    transform: translate(150px, -402px);
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 0px;
     z-index: 9;
-    width: 500px;
+    width: 350px;
     height: 402px;
     overflow: auto;
+    opacity: .95;
+  }
+  .formPopup .btn1 {
+    display: none;
+    margin: auto;
+    transform: translate(0px, -20px);
+    position: absolute;
+    border-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+    opacity: .8;
+    z-index: 11;
+  }
+  .formPopup .btn1:hover,
+  .openButton:hover {
+    opacity: 1;
   }
   .formPopup1 {
     display: none;
     padding: 17px;
     position: absolute;
-    transform: translate(0px, -402px);
+    transform: translate(150px, -402px);
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 0px;
     z-index: 9;
-    width: 500px;
+    width: 350px;
     height: 402px;
     overflow: auto;
+    opacity: .95;
   }
-  
+  .formPopup1 .btn1 {
+    display: none;
+    margin: auto;
+    transform: translate(0px, -20px);
+    position: absolute;
+    border-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+    opacity: .8;
+    z-index: 11;
+  }
+  .formPopup1 .btn1:hover,
+  .openButton:hover {
+    opacity: 1;
+  }
+  .iframeformPopup {
+    display: none;
+    position: absolute;
+    transform: translate(150px, -402px);
+    border-radius: 0px;
+    border: none;
+    z-index: 9;
+    width: 350px;
+    height: 402px;
+    overflow: auto;
+    opacity: .95;
+  }
+  .iframePopup .btn {
+    display: none;
+    margin: auto;
+    transform: translate(150px, -20px);
+    position: absolute;
+    border-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+    opacity: .8;
+    z-index: 11;
+  }
+  .iframePopup .btn:hover,
+  .openButton:hover {
+    opacity: 1;
+  }
   .formContainer {
     width: 100%;
     padding: 0%;
@@ -179,5 +253,16 @@
         height: 282px;
         width: 350px;
         transform: translate(0px, -284px);       
+      }
+      .iframePopup {
+        width: 350px;
+      }
+      .iframeformPopup {
+        height: 282px;
+        width: 350px;
+        transform: translate(0px, -282px);
+      }
+      .iframePopup .btn {
+        transform: translate(0px, -20px);
       }
   }
