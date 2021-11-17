@@ -36,7 +36,7 @@ function getParams(script_name) {
 }
 
     //var run_mode = "local"
-    var release_version = "0.1.1";
+    var release_version = "0.1.2";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }
@@ -179,13 +179,16 @@ function getParams(script_name) {
     function openForm1() {
         document.getElementById("popupForm1").style.display = "block";
     }
-    var email, useCase, data1, data2;
+    var email;
+    var useCase; 
+    var data1;
+    var data2;
     function closeForm() {
         document.getElementById("popupForm").style.display = "none";
         email = document.getElementById("email").value;
         useCase = document.getElementById("ans").value;
         //console.log(datain);
-        if (done_form1) {saveForm(email, useCase, video_params.id);}
+        if (done_form1) {saveForm(email, useCase, data1, data2, video_params.id);}
         done_form = true;
         pause_source_func = false;
         if (!done_form1) {done=false;}
@@ -196,6 +199,7 @@ function getParams(script_name) {
         data1 = document.getElementById("data1").value;
         data2 = document.getElementById("data2").value;
         //console.log(datain);
+        //console.log(email, useCase, data1, data2, video_params.id);
         saveForm(email, useCase, data1, data2, video_params.id);
         done_form1 = true;
         pause_source_func = false;
