@@ -36,7 +36,7 @@ function getParams(script_name) {
 }
 
     //var run_mode = "local"
-    var release_version = "0.1.0";
+    var release_version = "0.1.1";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }
@@ -102,7 +102,7 @@ function getParams(script_name) {
     var timep = 0;
     var pause_source_func = false;
     var done_form = false;
-    if (playtime_to_form1 === 0){ var done_form1 = true; console.log("no second form");}
+    if (playtime_to_form1 == 0){ var done_form1 = true; console.log("no second form");}
     else {done_form1 = false;}
     function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
