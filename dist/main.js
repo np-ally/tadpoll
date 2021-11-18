@@ -7,7 +7,7 @@
     //Local vs release paths
     //var run_mode = "local"
     var path_local = "../dist/";
-    var release_version = "0.2.3";
+    var release_version = "0.2.4";
     var path_release = "https://cdn.jsdelivr.net/gh/np-ally/tadpoll@" + release_version + "/dist/";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     

@@ -1,4 +1,4 @@
-    var release_version = "0.2.3";
+    var release_version = "0.2.4";
     var search_path_release = "np-ally/tadpoll@" + release_version + "/dist/";
     if (window.location.protocol === "file:") {var search_path = '';}
     else { search_path = search_path_release; }
@@ -65,7 +65,9 @@
     var done_pause2 = false;
     var timep = 0;
     var pause_source_func = false;
-    var done_form = false;
+    //remove forms based on time setting
+    if (playtime == 0){ var done_form = true; console.log("no first form");}
+    else {done_form = false;}
     if (playtime_to_form1 == 0){ var done_form1 = true; console.log("no second form");}
     else {done_form1 = false;}
     if (playtime_to_iframe == 0){ var done_form2 = true; console.log("no iframe");}
